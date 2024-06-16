@@ -151,6 +151,7 @@ class DragAndDropList implements DragAndDropListInterface {
       contents.add(
         Expanded(
           child: SingleChildScrollView(
+            scrollDirection: (axis == Axis.vertical) ? Axis.vertical : Axis.horizontal,
             physics: const NeverScrollableScrollPhysics(),
             child: (axis == Axis.vertical)? Column(
               crossAxisAlignment: verticalAlignment,
