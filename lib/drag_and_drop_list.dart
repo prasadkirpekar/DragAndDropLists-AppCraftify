@@ -44,6 +44,10 @@ class DragAndDropList implements DragAndDropListInterface {
   @override
   final List<DragAndDropItem> children;
 
+  /// The axis of the list.
+  /// If this is not null, it will override that set in [DragAndDropLists.axis].
+  final Axis axis;
+
   /// Whether or not this item can be dragged.
   /// Set to true if it can be reordered.
   /// Set to false if it must remain fixed.
@@ -63,6 +67,7 @@ class DragAndDropList implements DragAndDropListInterface {
     this.horizontalAlignment = MainAxisAlignment.start,
     this.verticalAlignment = CrossAxisAlignment.start,
     this.canDrag = true,
+    this.axis = Axis.vertical,
   });
 
   @override
@@ -147,8 +152,12 @@ class DragAndDropList implements DragAndDropListInterface {
         Expanded(
           child: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
-            child: Column(
+            child: (axis == Axis.vertical)? Column(
               crossAxisAlignment: verticalAlignment,
+              mainAxisSize: MainAxisSize.max,
+              children: allChildren,
+            ): Row(
+              mainAxisAlignment: horizontalAlignment,
               mainAxisSize: MainAxisSize.max,
               children: allChildren,
             ),
